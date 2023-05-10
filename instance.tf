@@ -7,7 +7,7 @@ data "aws_ami" "amazonlinux" {
   }
 
   filter {
-    name  = "virtualization-type"
+    name   = "virtualization-type"
     values = ["hvm"]
   }
 }
@@ -19,6 +19,7 @@ resource "aws_instance" "public" {
   key_name                    = "ssh-may"
   vpc_security_group_ids      = [aws_security_group.public.id]
   subnet_id                   = aws_subnet.public[0].id
+  user_data                   = file("userdata.sh")
 
   tags = {
     Name = "${var.env_code}-public"
@@ -29,12 +30,21 @@ resource "aws_security_group" "public" {
   name        = "${var.env_code}-piblic"
   description = "Allow inbound traffic"
   vpc_id      = aws_vpc.main.id
+
   ingress {
     description = "SSH from public"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["64.107.3.137/32"]
+    cidr_blocks = ["98.206.24.195/32"]
+  }
+
+  ingress {
+    description = "HTTP from public"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
