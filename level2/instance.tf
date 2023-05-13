@@ -19,7 +19,7 @@ count = 2
   instance_type          = "t3.micro"
   key_name               = "ssh-may"
   vpc_security_group_ids = [aws_security_group.private.id]
-  subnet_id              = data.terraform_remote_state.level1.outputs.private_subnet_id[0]
+  subnet_id              = data.terraform_remote_state.level1.outputs.private_subnet_id[count.index]
   user_data              = file("userdata.sh")
 
   tags = {
