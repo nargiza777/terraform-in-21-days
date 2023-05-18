@@ -13,4 +13,3 @@ output "vpc_id" {
 output "vpc_cidr" {
   value = module.vpc.vpc_cidr
 }
- 
