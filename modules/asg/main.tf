@@ -28,7 +28,7 @@ resource "aws_launch_configuration" "main" {
   image_id        = var.ami_id
   instance_type   = "t3.micro"
   security_groups = [aws_security_group.private.id]
-  user_data       = file("userdata.sh") 
+  user_data       = file("${path.module}/userdata.sh") 
   iam_instance_profile = aws_iam_instance_profile.main.name
 }
 
@@ -38,7 +38,7 @@ resource "aws_autoscaling_group" "main" {
   desired_capacity = 2
   max_size         = 4
 
-  target_group_arns    = [var.target_group.arn]
+  target_group_arns    = [var.target_group_arn]
   launch_configuration = aws_launch_configuration.main.name
   vpc_zone_identifier  = var.private_subnet_id
 
