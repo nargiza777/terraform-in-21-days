@@ -1,1 +1,1 @@
-env_code = "sf"
+cluster_name = "finance"
