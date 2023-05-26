@@ -1,3 +1,1 @@
-variable "env_code" {
-    default = "env"
-}
+variable "cluster_name" {}
